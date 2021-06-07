@@ -8,19 +8,24 @@
 (define *light0-pos* #f32(0 10 0 1))
 (define *light0-color* #f32(1 1 1 0))
 
+;;define rad-deg
+(define *pi* (* 4 (atan 1)))
+(define (deg-to-rad deg) (* deg (/ *pi* 180)))
+(define (rad-to-deg rad) (* rad (/ 180 *pi*)))
+
 ;;define classes
 (define-class <3d-object> ()
   ((x :init-value 0 :init-keyword :x :accessor x-of)
    (y :init-value 0 :init-keyword :y :accessor y-of)
    (z :init-value 0 :init-keyword :z :accessor z-of)
-   (rx :init-value 0 :init-keyword :rx :accessor rx-of)
-   (ry :init-value 0 :init-keyword :ry :accessor ry-of)
-   (rz :init-value 0 :init-keyword :rz :accessor rz-of)
+   (r :init-value 0 :init-keyword :r :accessor r-of)
+   (d :init-value 0 :init-keyword :d :accessor d-of)
    (color :init-value #f32(0 0 0 1) :init-keyword :color :accessor color-of)
    ))
 
 ;;define dynamic variables
-(define *player* (make <3d-object> :x 0 :y 0.5 :z 0 :color #f32(0 1 0 1)) )
+(define *player* (make <3d-object>
+                   :x 0 :y 0.5 :z 0 :d 0.1 :color #f32(0 1 0 1)) )
 (define *keycode* #\null)
 
 (define (display)
@@ -51,10 +56,31 @@
 (define (display-player)
   ;;key control
   (cond
-   ( (char=? *keycode* #\a) (set! (x-of *player*) (- (x-of *player*) 0.1)) )
-   ( (char=? *keycode* #\d) (set! (x-of *player*) (+ (x-of *player*) 0.1)) )
-   ( (char=? *keycode* #\w) (set! (z-of *player*) (- (z-of *player*) 0.1)) )
-   ( (char=? *keycode* #\s) (set! (z-of *player*) (+ (z-of *player*) 0.1)) )
+   ( (char=? *keycode* #\a)
+     (set! (r-of *player*) (+ (r-of *player*) 4)) )
+
+   ( (char=? *keycode* #\d)
+     (set! (r-of *player*) (- (r-of *player*) 4)) )
+
+   ( (char=? *keycode* #\w)
+     (begin
+       (set! (x-of *player*)
+             (+ (x-of *player*)
+                (* (d-of *player*) (sin (deg-to-rad (r-of *player*))) )) )
+       (set! (z-of *player*)
+             (+ (z-of *player*)
+                (* (d-of *player*) (cos (deg-to-rad (r-of *player*))) )) )
+       ))
+
+   ( (char=? *keycode* #\s)
+     (begin
+       (set! (x-of *player*)
+             (+ (x-of *player*)
+                (* (/ (d-of *player*) -3) (sin (deg-to-rad (r-of *player*))))) )
+       (set! (z-of *player*)
+             (+ (z-of *player*)
+                (* (/ (d-of *player*) -3) (cos (deg-to-rad (r-of *player*))))) )
+       ))
    )
   ;;display player
   (display-cube: *player* 0.25)
@@ -64,6 +90,7 @@
   (gl-push-matrix)
   (gl-material GL_FRONT_AND_BACK GL_DIFFUSE (color-of obj))
   (gl-translate (x-of obj) (y-of obj) (z-of obj) )
+  (gl-rotate (r-of obj) 0 1 0)
   (glut-solid-cube size)
   (gl-pop-matrix)
   )
