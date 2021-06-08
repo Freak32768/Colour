@@ -1,4 +1,6 @@
 #|
+Copyright 2021- Freak32768
+
 This file is part of Colour.
 
     Colour is free software: you can redistribute it and/or modify
@@ -23,7 +25,7 @@ This file is part of Colour.
 (define *window-width* 640)
 (define *window-height* 640)
 (define *floor-size* 10)
-(define *light0-pos* #f32(0 10 0 1))
+(define *light0-pos* #f32(0 5 0 1))
 (define *light0-color* #f32(1 1 1 0))
 
 ;;define rad-deg
@@ -56,8 +58,18 @@ This file is part of Colour.
 (define (display-canvas)
   (display-floor)
   (display-player)
+  (display-camera)
   )
-
+(define (display-camera)
+  (gl-matrix-mode GL_MODELVIEW)
+  (gl-load-identity)
+  (glu-look-at
+   (- (x-of *player*) (* (sin (deg-to-rad (r-of *player*))) 3))
+   (+ (y-of *player*) (+ (y-of *player*) 0.1))
+   (- (z-of *player*) (* (cos (deg-to-rad (r-of *player*))) 3))
+   (x-of *player*) (y-of *player*) (z-of *player*)
+   0 1 0)
+  )
 (define (display-floor)
   (gl-push-matrix)
   (gl-material GL_FRONT_AND_BACK GL_DIFFUSE #f32(0.5 0.5 0.5 1))
@@ -75,10 +87,14 @@ This file is part of Colour.
   ;;key control
   (cond
    ( (char=? *keycode* #\a)
-     (set! (r-of *player*) (+ (r-of *player*) 4)) )
+     (set! (r-of *player*) (if (< 360 (r-of *player*))
+                               0
+                               (+ (r-of *player*) 4)) ))
 
    ( (char=? *keycode* #\d)
-     (set! (r-of *player*) (- (r-of *player*) 4)) )
+     (set! (r-of *player*) (if (> 0 (r-of *player*))
+                               360
+                               (- (r-of *player*) 4)) ))
 
    ( (char=? *keycode* #\w)
      (begin
@@ -138,10 +154,10 @@ This file is part of Colour.
 
 (define (resize w h)
   (gl-viewport 0 0 w h)
+  (gl-matrix-mode GL_PROJECTION)
   (gl-load-identity)
   (gl-translate 0 0 -0.01)
   (glu-perspective 30 (/ w h) 1 100)
-  (glu-look-at 3 4 5 0 0 0 0 1 0)
   )
 
 (define (main args)
