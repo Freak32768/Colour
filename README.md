@@ -1,14 +1,15 @@
 
 # Table of Contents
 
-1.  [Introduction](#orgea613a2)
-2.  [System](#orgb20167b)
-3.  [TODO-LIST](#org9840c1f)
-4.  [DONE-LIST](#org7d37d50)
+1.  [Introduction](#orgcdc1735)
+2.  [System](#orgbd9ce92)
+3.  [TODO-LIST](#orgcbd806d)
+4.  [DONE-LIST](#org89b70e6)
+5.  [Licese of this file](#org6b92f51)
 
 
 
-<a id="orgea613a2"></a>
+<a id="orgcdc1735"></a>
 
 # Introduction
 
@@ -17,15 +18,15 @@ Colour(コロールと読む)はその名の通り"色"をテーマにした
 ColourはGNU GPL v3 or laterで配布されています。
 
 
-<a id="orgb20167b"></a>
+<a id="orgbd9ce92"></a>
 
 # System
 
--   ADで左右に方向回転、WSで前後移動です。
+-   ADで左右に方向回転、WSで移動です。
 -   Vで弾を選択し、Bで弾を発射します。
 
 
-<a id="org9840c1f"></a>
+<a id="orgcbd806d"></a>
 
 # TODO-LIST
 
@@ -35,19 +36,28 @@ ColourはGNU GPL v3 or laterで配布されています。
 -   敵の追加
 -   シューティング機能の追加
 -   ダメージの追加
--   弾色によるダメージ変化の追加
 -   構造物の追加
 -   テクスチャの追加
 -   ゲームシステムの追加
 
 
-<a id="org7d37d50"></a>
+<a id="org89b70e6"></a>
 
 # DONE-LIST
 
 すでに実装された機能です。
 
 -   WASDによる移動の追加 -2021/6/5
--   移動システムの改良(A, Dで角度を変えW, Sで前後進) -2021/6/6
+-   移動システムの改良(A, Dで角度を変えW, Sで前後進) -2021/6/7
 -   TPS視点の追加 -2021/6/8
+
+
+<a id="org6b92f51"></a>
+
+# Licese of this file
+
+README.md is licensed under CC0,
+so you can do anything what you want to do.
+See the [CC0-webpage](https://creativecommons.org/choose/zero/)
+URL:<https://creativecommons.org/choose/zero/>
 
