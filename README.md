@@ -1,15 +1,15 @@
 
 # Table of Contents
 
-1.  [Introduction](#org60ecd15)
-2.  [System](#org58866ed)
-3.  [TODO-LIST](#org078aead)
-4.  [DONE-LIST](#org49c7399)
-5.  [License](#org198c712)
+1.  [Introduction](#org5bd989c)
+2.  [System](#org9fcb3e5)
+3.  [TODO-LIST](#orge740b02)
+4.  [DONE-LIST](#org7dff891)
+5.  [License](#orga13e40c)
 
 
 
-<a id="org60ecd15"></a>
+<a id="org5bd989c"></a>
 
 # Introduction
 
@@ -17,7 +17,7 @@ Colour(コロールと読む)はその名の通り"色"をテーマにした
 3DパズルTPSゲームです。(パズルかどうかは微妙です。)
 
 
-<a id="org58866ed"></a>
+<a id="org9fcb3e5"></a>
 
 # System
 
@@ -25,13 +25,13 @@ Colour(コロールと読む)はその名の通り"色"をテーマにした
 -   Vで弾を選択し、Bで弾を発射します。
 
 
-<a id="org078aead"></a>
+<a id="orge740b02"></a>
 
 # TODO-LIST
 
 これから実装予定の機能です。
-= 三角関数テーブルの追加(高速化のため)
 
+-   三角関数テーブルの追加(高速化のため)
 -   自機モデルの追加
 -   敵の追加
 -   シューティング機能の追加
@@ -41,7 +41,7 @@ Colour(コロールと読む)はその名の通り"色"をテーマにした
 -   ゲームシステムの追加
 
 
-<a id="org49c7399"></a>
+<a id="org7dff891"></a>
 
 # DONE-LIST
 
@@ -52,7 +52,7 @@ Colour(コロールと読む)はその名の通り"色"をテーマにした
 -   TPS視点の追加 -2021/6/8
 
 
-<a id="org198c712"></a>
+<a id="orga13e40c"></a>
 
 # License
 
