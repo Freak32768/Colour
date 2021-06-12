@@ -1,15 +1,15 @@
 
 # Table of Contents
 
-1.  [Introduction](#orge750b2a)
-2.  [System](#orgaa5d20f)
-3.  [TODO-LIST](#org7e399ce)
-4.  [DONE-LIST](#org4d6bdbb)
-5.  [Licese](#org8f41640)
+1.  [Introduction](#org60ecd15)
+2.  [System](#org58866ed)
+3.  [TODO-LIST](#org078aead)
+4.  [DONE-LIST](#org49c7399)
+5.  [License](#org198c712)
 
 
 
-<a id="orge750b2a"></a>
+<a id="org60ecd15"></a>
 
 # Introduction
 
@@ -17,7 +17,7 @@ Colour(コロールと読む)はその名の通り"色"をテーマにした
 3DパズルTPSゲームです。(パズルかどうかは微妙です。)
 
 
-<a id="orgaa5d20f"></a>
+<a id="org58866ed"></a>
 
 # System
 
@@ -25,7 +25,7 @@ Colour(コロールと読む)はその名の通り"色"をテーマにした
 -   Vで弾を選択し、Bで弾を発射します。
 
 
-<a id="org7e399ce"></a>
+<a id="org078aead"></a>
 
 # TODO-LIST
 
@@ -41,7 +41,7 @@ Colour(コロールと読む)はその名の通り"色"をテーマにした
 -   ゲームシステムの追加
 
 
-<a id="org4d6bdbb"></a>
+<a id="org49c7399"></a>
 
 # DONE-LIST
 
@@ -52,9 +52,9 @@ Colour(コロールと読む)はその名の通り"色"をテーマにした
 -   TPS視点の追加 -2021/6/8
 
 
-<a id="org8f41640"></a>
+<a id="org198c712"></a>
 
-# Licese
+# License
 
 -   Colour is licensed under GPL v3 or later.
     See the COPYING file or [GNU-webpage](https://www.gnu.org/licenses)
