@@ -20,6 +20,8 @@ This file is part of Colour.
 
 (use gl)
 (use gl.glut)
+(load "./3d-object.scm")
+(load "./trifunc.scm")
 
 ;;define constant values
 (define *window-width* 640)
@@ -28,21 +30,6 @@ This file is part of Colour.
 (define *floor-color* #f32(0.5 0.5 0.5 1))
 (define *light0-pos* #f32(0 3 0 1))
 (define *light-color* #f32(1 1 1 0))
-
-;;define rad-deg
-(define *pi* (* 4 (atan 1)))
-(define (deg-to-rad deg) (* deg (/ *pi* 180)))
-(define (rad-to-deg rad) (* rad (/ 180 *pi*)))
-
-;;define classes
-(define-class <3d-object> ()
-  ((x :init-value 0 :init-keyword :x :accessor x-of)
-   (y :init-value 0 :init-keyword :y :accessor y-of)
-   (z :init-value 0 :init-keyword :z :accessor z-of)
-   (r :init-value 0 :init-keyword :r :accessor r-of)
-   (d :init-value 0 :init-keyword :d :accessor d-of)
-   (color :init-value #f32(0 0 0 1) :init-keyword :color :accessor color-of)
-   ))
 
 ;;define dynamic variables
 (define *player* (make <3d-object>
@@ -65,12 +52,13 @@ This file is part of Colour.
   (gl-matrix-mode GL_MODELVIEW)
   (gl-load-identity)
   (glu-look-at
-   (- (x-of *player*) (* (sin (deg-to-rad (r-of *player*))) 3))
+   (- (x-of *player*) (* (sin-from-table (r-of *player*)) 3))
    (+ (y-of *player*) (+ (y-of *player*) 0.1))
-   (- (z-of *player*) (* (cos (deg-to-rad (r-of *player*))) 3))
+   (- (z-of *player*) (* (cos-from-table (r-of *player*)) 3))
    (x-of *player*) (y-of *player*) (z-of *player*)
    0 1 0)
   )
+
 (define (display-floor)
   (gl-push-matrix)
   (gl-material GL_FRONT_AND_BACK GL_DIFFUSE *floor-color*)
@@ -88,12 +76,12 @@ This file is part of Colour.
   ;;key control
   (cond
    ( (char=? *keycode* #\a)
-     (set! (r-of *player*) (if (< 360 (r-of *player*))
+     (set! (r-of *player*) (if (<= 360 (r-of *player*))
                                0
                                (+ (r-of *player*) 4)) ))
 
    ( (char=? *keycode* #\d)
-     (set! (r-of *player*) (if (> 0 (r-of *player*))
+     (set! (r-of *player*) (if (>= 0 (r-of *player*))
                                360
                                (- (r-of *player*) 4)) ))
 
@@ -101,20 +89,20 @@ This file is part of Colour.
      (begin
        (set! (x-of *player*)
              (+ (x-of *player*)
-                (* (d-of *player*) (sin (deg-to-rad (r-of *player*))) )) )
+                (* (d-of *player*) (sin-from-table (r-of *player*)) )) )
        (set! (z-of *player*)
              (+ (z-of *player*)
-                (* (d-of *player*) (cos (deg-to-rad (r-of *player*))) )) )
+                (* (d-of *player*) (cos-from-table (r-of *player*)) )) )
        ))
 
    ( (char=? *keycode* #\s)
      (begin
        (set! (x-of *player*)
              (+ (x-of *player*)
-                (* (/ (d-of *player*) -3) (sin (deg-to-rad (r-of *player*))))) )
+                (* (/ (d-of *player*) -3) (sin-from-table (r-of *player*)) )) )
        (set! (z-of *player*)
              (+ (z-of *player*)
-                (* (/ (d-of *player*) -3) (cos (deg-to-rad (r-of *player*))))) )
+                (* (/ (d-of *player*) -3) (cos-from-table (r-of *player*)) )) )
        ))
    )
   ;;display player
