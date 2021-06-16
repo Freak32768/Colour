@@ -32,8 +32,14 @@ This file is part of Colour.
 (define *light-color* #f32(1 1 1 0))
 
 ;;define dynamic variables
-(define *player* (make <3d-object>
-                   :x 0 :y 0.5 :z 0 :d 0.1 :color #f32(0 1 0 1)) )
+(define *player* (make <3d-obj>
+                   :x 0 :y 0.125 :z 0 :d 0.1
+                   :color #f32(0 1 0 1)) )
+(define *enemy-model* (make <3d-obj>
+                        :x 0 :y 0 :z 0
+                        :color #f32(1 0 0 1)
+                        :obj-data (load-obj "./objects/enemy.obj")
+                        ))
 (define *keycode* #\null)
 
 (define (display)
@@ -46,6 +52,7 @@ This file is part of Colour.
 (define (display-canvas)
   (display-floor)
   (display-player)
+  (display-3d-obj: *enemy-model*)
   (display-camera)
   )
 (define (display-camera)
@@ -109,7 +116,7 @@ This file is part of Colour.
   (display-cube: *player* 0.25)
   )
 
-(define-method display-cube: ((obj <3d-object>) size)
+(define-method display-cube: ((obj <3d-obj>) size)
   (gl-push-matrix)
   (gl-material GL_FRONT_AND_BACK GL_DIFFUSE (color-of obj))
   (gl-translate (x-of obj) (y-of obj) (z-of obj) )

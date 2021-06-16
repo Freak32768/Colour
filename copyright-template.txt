@@ -1,3 +1,5 @@
+Copyright 2021- Freak32768
+
 This file is part of Colour.
 
     Colour is free software: you can redistribute it and/or modify
