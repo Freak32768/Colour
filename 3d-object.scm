@@ -24,10 +24,6 @@ This file is part of Colour.
 (use srfi-13)
 (use gauche.uvector)
 
-(define-class <obj-data> ()
-  ((vdata :init-value #() :init-keyword :vdata :accessor vdata-of)
-   (fdata :init-value #() :init-keyword :fdata :accessor fdata-of)
-   ))
 ;;define classes
 (define-class <3d-obj> ()
   ((x :init-value 0 :init-keyword :x :accessor x-of)
@@ -35,13 +31,13 @@ This file is part of Colour.
    (z :init-value 0 :init-keyword :z :accessor z-of)
    (r :init-value 0 :init-keyword :r :accessor r-of)
    (d :init-value 0 :init-keyword :d :accessor d-of)
-   (color :init-value #f32(0 0 0 1) :init-keyword :color :accessor color-of)
+   (color :init-value #f32(0 0 0 1)
+          :init-keyword :color
+          :accessor color-of)
    (obj-data :init-value #()
              :init-keyword :obj-data
              :accessor obj-data-of)
    ))
-
-(define (vec2d-ref vec a b) (vector-ref (vector-ref a) b) )
 
 ;;split text list -> vertex data (string list) -> vertex data (number vector)
 (define (filter-data split-text filter-token)

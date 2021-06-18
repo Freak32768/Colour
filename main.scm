@@ -28,18 +28,22 @@ This file is part of Colour.
 (define *window-height* 640)
 (define *floor-size* 10)
 (define *floor-color* #f32(0.5 0.5 0.5 1))
-(define *light0-pos* #f32(0 3 0 1))
-(define *light-color* #f32(1 1 1 0))
+(define *light0-pos* #f32(3 3 3 0))
+(define *light-color* #f32(1 1 1 1))
 
 ;;define dynamic variables
 (define *player* (make <3d-obj>
-                   :x 0 :y 0.125 :z 0 :d 0.1
-                   :color #f32(0 1 0 1)) )
+                   :x 0 :y 0 :z 0 :d 0.1
+                   :color #f32(0 1 0 1)
+                   :obj-data (load-obj "./objects/player.obj")
+                   ))
+
 (define *enemy-model* (make <3d-obj>
                         :x 0 :y 0 :z 0
                         :color #f32(1 0 0 1)
                         :obj-data (load-obj "./objects/enemy.obj")
                         ))
+
 (define *keycode* #\null)
 
 (define (display)
@@ -60,9 +64,9 @@ This file is part of Colour.
   (gl-load-identity)
   (glu-look-at
    (- (x-of *player*) (* (sin-from-table (r-of *player*)) 3))
-   (+ (y-of *player*) (+ (y-of *player*) 0.1))
+   (+ (y-of *player*) (+ (y-of *player*) 0.7))
    (- (z-of *player*) (* (cos-from-table (r-of *player*)) 3))
-   (x-of *player*) (y-of *player*) (z-of *player*)
+   (x-of *player*) (+ (y-of *player*) 0.5) (z-of *player*)
    0 1 0)
   )
 
@@ -113,7 +117,7 @@ This file is part of Colour.
        ))
    )
   ;;display player
-  (display-cube: *player* 0.25)
+  (display-3d-obj: *player*)
   )
 
 (define-method display-cube: ((obj <3d-obj>) size)

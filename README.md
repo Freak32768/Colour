@@ -1,15 +1,15 @@
 
 # Table of Contents
 
-1.  [Introduction](#org02e0e12)
-2.  [System](#org47cd614)
-3.  [TODO-LIST](#org9652b71)
-4.  [DONE-LIST](#orga1bc10d)
-5.  [License](#orgca6807e)
+1.  [Introduction](#org382bb53)
+2.  [System](#orgdb8eedd)
+3.  [TODO-LIST](#orgc407d1e)
+4.  [DONE-LIST](#org2eed224)
+5.  [License](#org4fd49f8)
 
 
 
-<a id="org02e0e12"></a>
+<a id="org382bb53"></a>
 
 # Introduction
 
@@ -18,7 +18,7 @@
 -   ColourはGauche(Scheme処理系), Gauche-gl(GaucheのOpenGL拡張)を必要とします。
 
 
-<a id="org47cd614"></a>
+<a id="orgdb8eedd"></a>
 
 # System
 
@@ -26,14 +26,13 @@
 -   Vで弾を選択し、Bで弾を発射します。
 
 
-<a id="org9652b71"></a>
+<a id="orgc407d1e"></a>
 
 # TODO-LIST
 
 これから実装予定の機能です。
 
 -   ライトの調整(今はとても暗い)
--   自機モデルの追加
 -   敵の追加
 -   シューティング機能の追加
 -   ダメージの追加
@@ -42,7 +41,7 @@
 -   ゲームシステムの追加
 
 
-<a id="orga1bc10d"></a>
+<a id="org2eed224"></a>
 
 # DONE-LIST
 
@@ -53,15 +52,17 @@
 -   TPS視点の追加 -2021/6/8
 -   三角関数テーブルの追加(高速化のため) -2021/6/13
 -   3Dモデルロードシステムの追加 -2021/6/16
+-   自機モデルの追加 -2021/6/18
 
 
-<a id="orgca6807e"></a>
+<a id="org4fd49f8"></a>
 
 # License
 
 -   Colour is licensed under GPL v3 or later.
-    See the COPYING file or [GNU-webpage](https://www.gnu.org/licenses)
--   README.md is licensed under CC0,
+    See the COPYING file or [GNU-website](https://www.gnu.org/licenses).
+-   README.md and 3D model files in ./objects
+    (\*.blend, \*.obj) are licensed under CC0,
     so you can do anything what you want to do.
-    See the [CC0-webpage](https://creativecommons.org/choose/zero/)
+    See [CC0-website](https://creativecommons.org/choose/zero/).
 
