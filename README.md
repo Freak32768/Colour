@@ -1,15 +1,16 @@
 
 # Table of Contents
 
-1.  [Introduction](#org382bb53)
-2.  [System](#orgdb8eedd)
-3.  [TODO-LIST](#orgc407d1e)
-4.  [DONE-LIST](#org2eed224)
-5.  [License](#org4fd49f8)
+1.  [Introduction](#org3b750c0)
+2.  [System](#org793a503)
+3.  [TODO-LIST](#org314e612)
+4.  [DONE-LIST](#orgaa4ad4f)
+5.  [REMOVED-LIST](#org13e69b2)
+6.  [License](#org7633bf2)
 
 
 
-<a id="org382bb53"></a>
+<a id="org3b750c0"></a>
 
 # Introduction
 
@@ -18,7 +19,7 @@
 -   ColourはGauche(Scheme処理系), Gauche-gl(GaucheのOpenGL拡張)を必要とします。
 
 
-<a id="orgdb8eedd"></a>
+<a id="org793a503"></a>
 
 # System
 
@@ -26,36 +27,45 @@
 -   Vで弾を選択し、Bで弾を発射します。
 
 
-<a id="orgc407d1e"></a>
+<a id="org314e612"></a>
 
 # TODO-LIST
 
 これから実装予定の機能です。
 
 -   ライトの調整(今はとても暗い)
--   敵の追加
--   シューティング機能の追加
--   ダメージの追加
--   構造物の追加
--   テクスチャの追加
--   ゲームシステムの追加
+-   効率的な敵の管理システム
+-   シューティング機能
+-   ダメージ
+-   構造物
+-   テクスチャ
+-   ゲームシステム
 
 
-<a id="org2eed224"></a>
+<a id="orgaa4ad4f"></a>
 
 # DONE-LIST
 
 すでに実装された機能です。
 
--   WASDによる移動の追加 -2021/6/5
 -   移動システムの改良(A, Dで角度を変えW, Sで前後進) -2021/6/7
--   TPS視点の追加 -2021/6/8
--   三角関数テーブルの追加(高速化のため) -2021/6/13
--   3Dモデルロードシステムの追加 -2021/6/16
--   自機モデルの追加 -2021/6/18
+-   TPS視点 -2021/6/8
+-   三角関数テーブル(高速化のため) -2021/6/13
+-   3Dモデルロードシステム -2021/6/16
+-   自機モデル -2021/6/18
+-   敵のモデル、移動システム -2021/6/22
 
 
-<a id="org4fd49f8"></a>
+<a id="org13e69b2"></a>
+
+# REMOVED-LIST
+
+削除された機能です。
+
+-   WASDによる移動 -移動システムの改良により削除
+
+
+<a id="org7633bf2"></a>
 
 # License
 

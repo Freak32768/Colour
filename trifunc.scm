@@ -23,22 +23,19 @@ This file is part of Colour.
 (define (deg-to-rad deg) (* deg (/ *pi* 180)))
 (define (rad-to-deg rad) (* rad (/ 180 *pi*)))
 
-;;make-table core
-(define (make-trifunc-table type n acc)
+(define (make-table f n acc)
   (if (< 360 n)
       (list->vector (reverse acc))
-      (make-trifunc-table type (+ n 1) (cons (type (deg-to-rad n)) acc) )
+      (make-table f (+ n 1) (cons (f (deg-to-rad n)) acc))
       ))
 
-;;frifunc-tables
-(define *sin-table* (make-trifunc-table sin 0 '()))
-(define *cos-table* (make-trifunc-table cos 0 '()))
-(define *tan-table* (make-trifunc-table tan 0 '()))
+(define *sin-table* (make-table sin 0 '()))
+(define *cos-table* (make-table cos 0 '()))
+(define *tan-table* (make-table tan 0 '()))
 
-;;get value from tables
-(define (sin-from-table n)
+(define (table-sin n)
   (vector-ref *sin-table* n))
-(define (cos-from-table n)
+(define (table-cos n)
   (vector-ref *cos-table* n))
-(define (tan-from-table n)
+(define (table-tan n)
   (vector-ref *tan-table* n))

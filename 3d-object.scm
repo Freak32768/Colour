@@ -30,7 +30,7 @@ This file is part of Colour.
    (y :init-value 0 :init-keyword :y :accessor y-of)
    (z :init-value 0 :init-keyword :z :accessor z-of)
    (r :init-value 0 :init-keyword :r :accessor r-of)
-   (d :init-value 0 :init-keyword :d :accessor d-of)
+   (visible :init-value #t :init-keyword :visible :accessor visible-of)
    (color :init-value #f32(0 0 0 1)
           :init-keyword :color
           :accessor color-of)
@@ -78,3 +78,7 @@ This file is part of Colour.
   (gl-end)
   (gl-pop-matrix)
   )
+
+(define-method distance: ((obj0 <3d-obj>) (obj1 <3d-obj>))
+  (sqrt (+ (expt (- (x-of obj0) (x-of obj1)) 2)
+           (expt (- (z-of obj0) (z-of obj1)) 2) ) ))
