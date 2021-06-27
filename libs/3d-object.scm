@@ -18,11 +18,8 @@ This file is part of Colour.
 
 |#
 
-(use gl)
-(use gl.glut)
 (use srfi-1)
 (use srfi-13)
-(use gauche.uvector)
 
 ;;define classes
 (define-class <3d-obj> ()
@@ -31,7 +28,7 @@ This file is part of Colour.
    (z :init-value 0 :init-keyword :z :accessor z-of)
    (r :init-value 0 :init-keyword :r :accessor r-of)
    (visible :init-value #t :init-keyword :visible :accessor visible-of)
-   (color :init-value #f32(0 0 0 1)
+   (color :init-value #f32(1 0 0 1)
           :init-keyword :color
           :accessor color-of)
    (obj-data :init-value #()
@@ -63,22 +60,20 @@ This file is part of Colour.
     ))
 
 (define-method display-3d-obj: ((obj <3d-obj>))
-  (when (visible-of obj)
-    (gl-push-matrix)
-    (gl-material GL_FRONT_AND_BACK GL_DIFFUSE (color-of obj))
-    (gl-translate (x-of obj) (y-of obj) (z-of obj))
-    (gl-rotate (r-of obj) 0 1 0)
-    (gl-begin GL_TRIANGLES)
-    (vector-for-each (lambda (three-vecs)
-                       (vector-for-each (lambda (vec)
-                                          (gl-vertex (vector-ref vec 0)
-                                                     (vector-ref vec 1)
-                                                     (vector-ref vec 2)) )
-                                        three-vecs) )
-                     (obj-data-of obj) )
-    (gl-end)
-    (gl-pop-matrix)
-    )
+  (gl-push-matrix)
+  (gl-material GL_FRONT_AND_BACK GL_DIFFUSE (color-of obj))
+  (gl-translate (x-of obj) (y-of obj) (z-of obj))
+  (gl-rotate (r-of obj) 0 1 0)
+  (gl-begin GL_TRIANGLES)
+  (vector-for-each (lambda (three-vecs)
+                     (vector-for-each (lambda (vec)
+                                        (gl-vertex (vector-ref vec 0)
+                                                   (vector-ref vec 1)
+                                                   (vector-ref vec 2)) )
+                                      three-vecs) )
+                   (obj-data-of obj) )
+  (gl-end)
+  (gl-pop-matrix)
   )
 
 (define-method distance: ((obj0 <3d-obj>) (obj1 <3d-obj>))
