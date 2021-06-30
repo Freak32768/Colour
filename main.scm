@@ -26,7 +26,7 @@ This file is part of Colour.
 (load "./config.scm")
 
 (define WINDOW-WIDTH 640)
-(define WINDOW=HEIGHT 640)
+(define WINDOW-HEIGHT 640)
 (define FLOOR-SIZE 20)
 (define FLOOR-COLOR #f32(0.5 0.5 0.5 1))
 (define LIGHT0-POS #f32(5 3 5 1))
@@ -47,7 +47,7 @@ This file is part of Colour.
                    :life-max 100
                    :color GREEN
                    :obj-data (load-obj "./objects/player.obj")
-                   :rifle-cooltime-max 5
+                   :rifle-cooltime-max PLAYER-RIFLE-COOLTIME
                    ))
 (define *enemies* '())
 (define *bullets* '())
@@ -285,7 +285,7 @@ This file is part of Colour.
 
 (define (main args)
   (glut-init args)
-  (glut-init-window-size WINDOW-WIDTH WINDOW=HEIGHT)
+  (glut-init-window-size WINDOW-WIDTH WINDOW-HEIGHT)
   (glut-init-display-mode (logior GLUT_RGBA GLUT_DOUBLE GLUT_DEPTH))
   (glut-create-window "Colour")
   (glut-display-func display-main-scene)
