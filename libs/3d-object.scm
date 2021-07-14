@@ -34,6 +34,9 @@ This file is part of Colour.
    (obj-data :init-value #()
              :init-keyword :obj-data
              :accessor obj-data-of)
+   (hitbox-range :init-value 0.2
+                 :init-keyword :hitbox-range
+                 :accessor hitbox-range-of)
    ))
 
 ;;split text list -> vertex data (string list) -> vertex data (number vector)

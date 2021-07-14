@@ -34,6 +34,14 @@ This file is part of Colour.
                        :init-keyword :rifle-cooltime-max
                        :accessor rifle-cooltime-max-of)
    ))
+(define-class <structure> (<3d-obj>)
+  ((life :init-value 0
+         :init-keyword :life
+         :accessor life-of)
+   (non-destroyable :init-value #f
+                    :init-keyword :non-destroyable
+                    :accessor non-destroyable-of)
+   ))
 
 (define (spawn-obj new-obj obj-list)
   (if (< 10 (length obj-list))
@@ -50,7 +58,7 @@ This file is part of Colour.
 (define-method collide-with-others? ((obj <3d-obj>) obj-list)
   (not (null? (filter
                (lambda (other-obj)
-                 (and (< (distance: obj other-obj) 0.2)
+                 (and (< (distance: obj other-obj) (hitbox-range-of obj))
                       (visible-of other-obj)) )
                (remove (lambda (x) (equal? x obj)) obj-list) )
               )) )
@@ -86,7 +94,7 @@ This file is part of Colour.
   (gl-pop-matrix)
   )
 
-(define-method damage-creature! ((obj <creature>) another-obj-color)
+(define-method give-damage! ((obj <3d-obj>) another-obj-color)
   (set! (life-of obj)
         (- (life-of obj)
            (cond
@@ -94,6 +102,6 @@ This file is part of Colour.
             ( (find (lambda (x)
                       (equal? (cons (color-of obj) another-obj-color) x))
                     CRITICALS) 5 )
-            ( else 1 ))
-           ))
+            (else 1)
+            ) ))
   )
