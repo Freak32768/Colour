@@ -1,18 +1,18 @@
 
 # Table of Contents
 
-1.  [Prologue](#orgae19e75)
-2.  [Introduction](#orga64bc8e)
-3.  [System](#org0c8bf7e)
-4.  [Control](#orgc2073b9)
-5.  [TODO-LIST](#org1404298)
-6.  [DONE-LIST](#org0896f45)
-7.  [REMOVED-LIST](#orga11c2e2)
-8.  [License](#orgb069d44)
+1.  [Prologue](#org295535a)
+2.  [Introduction](#org8f7a317)
+3.  [System](#org6fe134e)
+4.  [Control](#org450d8fd)
+5.  [TODO-LIST](#orgac32c8c)
+6.  [DONE-LIST](#orgf58fb27)
+7.  [REMOVED-LIST](#org15614c8)
+8.  [License](#org07b8075)
 
 
 
-<a id="orgae19e75"></a>
+<a id="org295535a"></a>
 
 # Prologue
 
@@ -24,7 +24,7 @@
 あなたの使命は"色"を駆使してT-zeroを殲滅し、世界に再び秩序をもたらすことだ。
 
 
-<a id="orga64bc8e"></a>
+<a id="org8f7a317"></a>
 
 # Introduction
 
@@ -35,7 +35,7 @@
     それでも挙動が治らない場合はごめんなさい。
 
 
-<a id="org0c8bf7e"></a>
+<a id="org6fe134e"></a>
 
 # System
 
@@ -43,8 +43,8 @@
 
 ---
 
--   ゲームクリアの条件は一定数の敵を倒すこと、ゲームオーバーの条件は自身のライフが0になることです。
--   敵は一定時間ごとに、特定の場所からスポーンします。これを止めることは不可能です。
+-   ゲームクリアの条件はスポナーをすべて破壊すること、ゲームオーバーの条件は自身のライフが0になることです。
+-   敵は一定時間ごとに、スポナーからスポーンします。スポナーは銃で破壊することができます。
 -   数字ボタンで自機の色が変わります。自機の色はすなわち発射する弾の色です。
 -   この世界には"補色"という概念が存在します。赤<=>緑、青<=>黄が対になっており(実際の補色とは異なります)、
     対の色同士が触れると大ダメージが発生します。
@@ -53,7 +53,7 @@
 -   反対に、同じ色同士が触れてもダメージは発生しません。
 
 
-<a id="orgc2073b9"></a>
+<a id="org450d8fd"></a>
 
 # Control
 
@@ -68,18 +68,18 @@
 -   B : 選択した色の弾を発射
 
 
-<a id="org1404298"></a>
+<a id="orgac32c8c"></a>
 
 # TODO-LIST
 
 これから実装予定の機能です。
 
 -   構造物
--   テクスチャ
+-   ゲームサウンド
 -   ゲームシステム
 
 
-<a id="org0896f45"></a>
+<a id="orgf58fb27"></a>
 
 # DONE-LIST
 
@@ -95,26 +95,27 @@
 -   シューティング機能 -2021/6/23
 -   リファクタリング(今はコードがごちゃごちゃしている) -2021/6/27
 -   ダメージ -2021/6/27
+-   スポナー -2021/7/14
 
 
-<a id="orga11c2e2"></a>
+<a id="org15614c8"></a>
 
 # REMOVED-LIST
 
-削除された、または実装を諦めた機能です。
+削除された、または実装を諦めた機能です。不甲斐ない作者をどうぞお許しください。
 
 -   WASDによる移動 -移動システムの改良により削除
 -   ライトの調整(今はとても暗い) -どうしてもわからなかった
+-   テクスチャ -どうしてもわからなかった
 
 
-<a id="orgb069d44"></a>
+<a id="org07b8075"></a>
 
 # License
 
 -   Colour is licensed under GPL v3 or later.
     See the COPYING file or [GNU-website](https://www.gnu.org/licenses).
--   README.md and 3D model files in ./objects/
-    (\*.blend, \*.obj) are licensed under CC0,
+-   README.md and artworks (\*.blend, \*.obj) are licensed under CC0,
     so you can do anything what you want to do.
     See [CC0-website](https://creativecommons.org/choose/zero/).
 

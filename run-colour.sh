@@ -1,1 +1,0 @@
-gosh main.scm

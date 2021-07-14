@@ -20,6 +20,7 @@ This file is part of Colour.
 
 (use gl)
 (use gl.glut)
+(use srfi-27)
 (load "./libs/3d-object.scm")
 (load "./libs/trifunc.scm")
 (load "./libs/obj-utils.scm")
@@ -35,11 +36,11 @@ This file is part of Colour.
 (define BLUE #f32(0 0 1 1))
 (define GREEN #f32(0 1 0 1))
 (define YELLOW #f32(1 1 0 1))
-(define CRITICALS '( (RED . GREEN)
-                    (GREEN . RED)
-                    (BLUE . YELLOW)
-                    (YELLOW . BLUE) )
-  )
+(define CRITICALS '( ( #f32(1 0 0 1) . #f32(0 1 0 1) )
+                     ( #f32(0 1 0 1) . #f32(1 0 0 1) )
+                     ( #f32(0 0 1 1) . #f32(1 1 0 1) )
+                     ( #f32(1 1 0 1) . #f32(0 0 1 1) )
+                     ))
 
 (define *player* (make <sniper>
                    :x 0 :y 0 :z 0
@@ -49,34 +50,43 @@ This file is part of Colour.
                    :obj-data (load-obj "./objects/player.obj")
                    :rifle-cooltime-max PLAYER-RIFLE-COOLTIME
                    ))
+(define *structures* '())
 (define *enemies* '())
 (define *bullets* '())
+(define *effects* '())
 (define *keycode* #\null)
-(define *killed-enemies* 0)
+(define *destroyed-spawner* 0)
 
 ;;tentative code
 (define (game-over)
   (display "Game over!!")
+  (newline)
   (exit 0)
   )
 (define (game-clear)
   (display "Game clear!!")
+  (newline)
   (exit 0)
   )
-(set! *enemies* (spawn-obj (make <creature> :x 5 :y 0 :z 5
-                                 :color YELLOW
-                                 :life 20
-                                 :life-max 20
-                                 :obj-data (load-obj "./objects/enemy.obj"))
-                           *enemies*))
-(set! *enemies* (spawn-obj (make <creature> :x -5 :y 0 :z -5
-                                 :color BLUE
-                                 :life 20
-                                 :life-max 20
-                                 :obj-data (load-obj "./objects/enemy.obj"))
-                           *enemies*))
+
+;;game initialize
+(random-source-randomize! default-random-source)
+(map (lambda (color)
+       (set! *structures*
+             (spawn-obj (make <structure>
+                          :x (- (random-integer 17) 8)
+                          :y 0
+                          :z (- (random-integer 17) 8)
+                          :color color
+                          :life 100
+                          :hitbox-range 0.5
+                          :obj-data (load-obj "./objects/enemy-spawner.obj"))
+                        *structures*))
+       ) '(#f32(1 0 0 1) #f32(0 1 0 1) #f32(0 0 1 1) #f32(1 1 0 1)) )
+
 ;;end tentative code
 (define (display-main-scene)
+  (when (< 3 *destroyed-spawner*) (game-clear))
   (gl-clear (logior GL_COLOR_BUFFER_BIT GL_DEPTH_BUFFER_BIT))
   (gl-light GL_LIGHT0 GL_POSITION LIGHT0-POS)
   (display-canvas)
@@ -86,8 +96,10 @@ This file is part of Colour.
 (define (display-canvas)
   (display-floor)
   (display-player!)
+  (obj-for-each! *structures* display-spawner!)
   (obj-for-each! *enemies* display-enemy!)
   (obj-for-each! *bullets* display-bullet!)
+  (obj-for-each! *effects* display-effect!)
   (display-camera)
   )
 
@@ -177,23 +189,24 @@ This file is part of Colour.
    ( (collide-with-others? *player* (filter (lambda (x)
                                            (equal? (color-of x) RED))
                                          *enemies*))
-     (damage-creature! *player* RED)
+     (give-damage! *player* RED)
      )
    ( (collide-with-others? *player* (filter (lambda (x)
                                            (equal? (color-of x) BLUE))
                                          *enemies*))
-     (damage-creature! *player* BLUE)
+     (give-damage! *player* BLUE)
      )
    ( (collide-with-others? *player* (filter (lambda (x)
                                            (equal? (color-of x) GREEN))
                                          *enemies*))
-     (damage-creature! *player* GREEN)
+     (give-damage! *player* GREEN)
      )
    ( (collide-with-others? *player* (filter (lambda (x)
                                            (equal? (color-of x) YELLOW))
                                          *enemies*))
-     (damage-creature! *player* YELLOW)
+     (give-damage! *player* YELLOW)
      )
+   ( (collide-with-others? *player* *structures*)  )
    )
   (when (visible-of *player*)
     (display-3d-obj: *player*)
@@ -201,12 +214,75 @@ This file is part of Colour.
     )
   )
 
+(define-method display-spawner! ((spawner <3d-obj>))
+  (when (< (life-of spawner) 1)
+    (begin
+      (set! (visible-of spawner) #f)
+      (set! *destroyed-spawner* (+ *destroyed-spawner* 1))
+      (set! *effects*
+            (spawn-obj
+             (make <3d-obj>
+               :x (x-of spawner)
+               :y (y-of spawner)
+               :z (z-of spawner)
+               :color (color-of spawner)
+               :obj-data (load-obj "./objects/enemy-spawner-destroyed.obj")
+               ) *effects*))
+      (set! *structures* (remove-invisible-obj *structures*))
+    ))
+  (cond
+   ( (collide-with-others? spawner (filter (lambda (x)
+                                           (equal? (color-of x) RED))
+                                         *bullets*))
+     (give-damage! spawner RED)
+     )
+   ( (collide-with-others? spawner (filter (lambda (x)
+                                           (equal? (color-of x) BLUE))
+                                         *bullets*))
+     (give-damage! spawner BLUE)
+     )
+   ( (collide-with-others? spawner (filter (lambda (x)
+                                           (equal? (color-of x) GREEN))
+                                         *bullets*))
+     (give-damage! spawner GREEN)
+     )
+   ( (collide-with-others? spawner (filter (lambda (x)
+                                           (equal? (color-of x) YELLOW))
+                                         *bullets*))
+     (give-damage! spawner YELLOW)
+     )
+   )
+  (when (= 1 (random-integer 1200))
+    (set! *enemies*
+          (spawn-obj (make <creature>
+                       :x (+ (x-of spawner) 1)
+                       :y 0
+                       :z (+ (z-of spawner) 1)
+                       :life 20
+                       :life-max 20
+                       :color (color-of spawner)
+                       :obj-data (load-obj "./objects/enemy.obj")
+                       ) *enemies*)
+          )
+    )
+  (display-3d-obj: spawner)
+  )
+
 (define-method display-enemy! ((enemy <creature>))
   (when (or (collide-with-others? enemy *enemies*)
             (< (life-of enemy) 0) )
     (begin
       (set! (visible-of enemy) #f)
-      (set! *killed-enemies* (+ *killed-enemies* 1))
+      (set! *effects*
+            (spawn-obj (make <3d-obj>
+                         :x (x-of enemy)
+                         :y (y-of enemy)
+                         :z (z-of enemy)
+                         :r (r-of enemy)
+                         :color (color-of enemy)
+                         :obj-data (load-obj "./objects/enemy-dead.obj")
+                         ) *effects*))
+      (set! *enemies* (remove-invisible-obj *enemies*))
       )
     )
   (let ((facing
@@ -225,22 +301,22 @@ This file is part of Colour.
    ( (collide-with-others? enemy (filter (lambda (x)
                                            (equal? (color-of x) RED))
                                          *bullets*))
-     (damage-creature! enemy RED)
+     (give-damage! enemy RED)
      )
    ( (collide-with-others? enemy (filter (lambda (x)
                                            (equal? (color-of x) BLUE))
                                          *bullets*))
-     (damage-creature! enemy BLUE)
+     (give-damage! enemy BLUE)
      )
    ( (collide-with-others? enemy (filter (lambda (x)
                                            (equal? (color-of x) GREEN))
                                          *bullets*))
-     (damage-creature! enemy GREEN)
+     (give-damage! enemy GREEN)
      )
    ( (collide-with-others? enemy (filter (lambda (x)
                                            (equal? (color-of x) YELLOW))
                                          *bullets*))
-     (damage-creature! enemy YELLOW)
+     (give-damage! enemy YELLOW)
      )
    )
   (when (> (distance: *player* enemy) 0.2)
@@ -249,6 +325,16 @@ This file is part of Colour.
     (display-3d-obj: enemy)
     (display-life-bar: enemy)
     )
+  )
+
+(define-method display-effect! ((effect <3d-obj>))
+  (if (< 5 (y-of effect))
+      (set! (visible-of effect) #f)
+      (begin
+        (set! (y-of effect) (+ (y-of effect) EFFECT-SPEED))
+        (display-3d-obj: effect)
+        )
+      )
   )
 
 (define (init)
