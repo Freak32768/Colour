@@ -36,6 +36,7 @@ This file is part of Colour.
 (define BLUE #f32(0 0 1 1))
 (define GREEN #f32(0 1 0 1))
 (define YELLOW #f32(1 1 0 1))
+(define WALL-COLOR #f32(0.5 0.5 0.5 1))
 (define CRITICALS '( ( #f32(1 0 0 1) . #f32(0 1 0 1) )
                      ( #f32(0 1 0 1) . #f32(1 0 0 1) )
                      ( #f32(0 0 1 1) . #f32(1 1 0 1) )
@@ -50,7 +51,8 @@ This file is part of Colour.
                    :obj-data (load-obj "./objects/player.obj")
                    :rifle-cooltime-max PLAYER-RIFLE-COOLTIME
                    ))
-(define *structures* '())
+(define *spawners* '())
+(define *walls* '())
 (define *enemies* '())
 (define *bullets* '())
 (define *effects* '())
@@ -72,17 +74,47 @@ This file is part of Colour.
 ;;game initialize
 (random-source-randomize! default-random-source)
 (map (lambda (color)
-       (set! *structures*
+       (set! *spawners*
              (spawn-obj (make <structure>
                           :x (- (random-integer 17) 8)
                           :y 0
                           :z (- (random-integer 17) 8)
+                          :r (random-integer 360)
                           :color color
                           :life 100
                           :hitbox-range 0.5
                           :obj-data (load-obj "./objects/enemy-spawner.obj"))
-                        *structures*))
+                        *spawners*))
        ) '(#f32(1 0 0 1) #f32(0 1 0 1) #f32(0 0 1 1) #f32(1 1 0 1)) )
+
+(set! *walls* (spawn-obj (make <structure>
+                           :x 10 :y 0 :z 0
+                           :color WALL-COLOR
+                           :life 1
+                           :non-destroyable #t
+                           :obj-data (load-obj "./objects/wall.obj"))
+                         *walls*))
+(set! *walls* (spawn-obj (make <structure>
+                           :x -10 :y 0 :z 0
+                           :color WALL-COLOR
+                           :life 1
+                           :non-destroyable #t
+                           :obj-data (load-obj "./objects/wall.obj"))
+                         *walls*))
+(set! *walls* (spawn-obj (make <structure>
+                           :x 0 :y 0 :z 10 :r 90
+                           :color WALL-COLOR
+                           :life 1
+                           :non-destroyable #t
+                           :obj-data (load-obj "./objects/wall.obj"))
+                         *walls*))
+(set! *walls* (spawn-obj (make <structure>
+                           :x 0 :y 0 :z -10 :r 90
+                           :color WALL-COLOR
+                           :life 1
+                           :non-destroyable #t
+                           :obj-data (load-obj "./objects/wall.obj"))
+                         *walls*))
 
 ;;end tentative code
 (define (display-main-scene)
@@ -96,7 +128,8 @@ This file is part of Colour.
 (define (display-canvas)
   (display-floor)
   (display-player!)
-  (obj-for-each! *structures* display-spawner!)
+  (obj-for-each! *spawners* display-spawner!)
+  (obj-for-each! *walls* (lambda (x) (display-3d-obj: x)))
   (obj-for-each! *enemies* display-enemy!)
   (obj-for-each! *bullets* display-bullet!)
   (obj-for-each! *effects* display-effect!)
@@ -148,7 +181,7 @@ This file is part of Colour.
 
 (define-method display-bullet! ((bullet <3d-obj>))
   (move-obj! bullet BULLET-SPEED)
-  (when (out-of-map? bullet)
+  (when 
     (set! (visible-of bullet) #f))
   (when (visible-of bullet) (display-3d-obj: bullet))
   )
@@ -206,7 +239,6 @@ This file is part of Colour.
                                          *enemies*))
      (give-damage! *player* YELLOW)
      )
-   ( (collide-with-others? *player* *structures*)  )
    )
   (when (visible-of *player*)
     (display-3d-obj: *player*)
@@ -214,7 +246,7 @@ This file is part of Colour.
     )
   )
 
-(define-method display-spawner! ((spawner <3d-obj>))
+(define-method display-spawner! ((spawner <structure>))
   (when (< (life-of spawner) 1)
     (begin
       (set! (visible-of spawner) #f)
@@ -228,7 +260,7 @@ This file is part of Colour.
                :color (color-of spawner)
                :obj-data (load-obj "./objects/enemy-spawner-destroyed.obj")
                ) *effects*))
-      (set! *structures* (remove-invisible-obj *structures*))
+      (set! *spawners* (remove-invisible-obj *spawners*))
     ))
   (cond
    ( (collide-with-others? spawner (filter (lambda (x)

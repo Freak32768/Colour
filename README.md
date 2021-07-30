@@ -1,18 +1,18 @@
 
 # Table of Contents
 
-1.  [Prologue](#org295535a)
-2.  [Introduction](#org8f7a317)
-3.  [System](#org6fe134e)
-4.  [Control](#org450d8fd)
-5.  [TODO-LIST](#orgac32c8c)
-6.  [DONE-LIST](#orgf58fb27)
-7.  [REMOVED-LIST](#org15614c8)
-8.  [License](#org07b8075)
+1.  [Prologue](#orge541b2a)
+2.  [Introduction](#org1edcfe2)
+3.  [System](#orgb5cfaa1)
+4.  [Control](#orgf2dfa34)
+5.  [TODO-LIST](#org520552a)
+6.  [DONE-LIST](#orgffb5b66)
+7.  [REMOVED-LIST](#org9f33e66)
+8.  [License](#orgb07b627)
 
 
 
-<a id="org295535a"></a>
+<a id="orge541b2a"></a>
 
 # Prologue
 
@@ -24,7 +24,7 @@
 あなたの使命は"色"を駆使してT-zeroを殲滅し、世界に再び秩序をもたらすことだ。
 
 
-<a id="org8f7a317"></a>
+<a id="org1edcfe2"></a>
 
 # Introduction
 
@@ -35,7 +35,7 @@
     それでも挙動が治らない場合はごめんなさい。
 
 
-<a id="org6fe134e"></a>
+<a id="orgb5cfaa1"></a>
 
 # System
 
@@ -51,9 +51,10 @@
     敵を倒すときに敵と対の色の弾を発射すると、より効率的に敵を倒せるでしょう。
 -   しかし、自機と対の色の敵に触れると大ダメージを負います。気をつけましょう。
 -   反対に、同じ色同士が触れてもダメージは発生しません。
+-   光の当たり方によっては、敵の色が見えないことがあります。そんなときは少し動き回って光の当たり方を調節しましょう。
 
 
-<a id="org450d8fd"></a>
+<a id="orgf2dfa34"></a>
 
 # Control
 
@@ -68,18 +69,17 @@
 -   B : 選択した色の弾を発射
 
 
-<a id="orgac32c8c"></a>
+<a id="org520552a"></a>
 
 # TODO-LIST
 
 これから実装予定の機能です。
 
--   構造物
 -   ゲームサウンド
--   ゲームシステム
+-   ゲームシステム(タイトル画面等)
 
 
-<a id="orgf58fb27"></a>
+<a id="orgffb5b66"></a>
 
 # DONE-LIST
 
@@ -96,9 +96,10 @@
 -   リファクタリング(今はコードがごちゃごちゃしている) -2021/6/27
 -   ダメージ -2021/6/27
 -   スポナー -2021/7/14
+-   構造物(壁) -2021/7/30
 
 
-<a id="org15614c8"></a>
+<a id="org9f33e66"></a>
 
 # REMOVED-LIST
 
@@ -109,7 +110,7 @@
 -   テクスチャ -どうしてもわからなかった
 
 
-<a id="org07b8075"></a>
+<a id="orgb07b627"></a>
 
 # License
 
