@@ -60,20 +60,23 @@ This file is part of Colour.
 (define *destroyed-spawner* 0)
 
 ;;tentative code
-(define (game-over)
-  (display "Game over!!")
-  (newline)
-  (exit 0)
-  )
-(define (game-clear)
-  (display "Game clear!!")
-  (newline)
-  (exit 0)
-  )
+(define (game-init)
+  (random-source-randomize! default-random-source)
+  ;;clear variables
+  (setpos-obj! *player* 0 0 0)
+  (set! (r-of *player*) 0)
+  (set! (life-of *player*) 100)
+  (set! (visible-of *player*) #t)
+  (set! *spawners* '())
+  (set! *walls* '())
+  (set! *enemies* '())
+  (set! *bullets* '())
+  (set! *effects* '())
+  (set! *keycode* #\null)
+  (set! *destroyed-spawner* 0)
 
-;;game initialize
-(random-source-randomize! default-random-source)
-(map (lambda (color)
+  ;;init structures
+  (map (lambda (color)
        (set! *spawners*
              (spawn-obj (make <structure>
                           :x (- (random-integer 17) 8)
@@ -86,35 +89,66 @@ This file is part of Colour.
                           :obj-data (load-obj "./objects/enemy-spawner.obj"))
                         *spawners*))
        ) '(#f32(1 0 0 1) #f32(0 1 0 1) #f32(0 0 1 1) #f32(1 1 0 1)) )
+  (set! *walls* (spawn-obj (make <structure>
+                             :x 10 :y 0 :z 0
+                             :color WALL-COLOR
+                             :life 1
+                             :non-destroyable #t
+                             :obj-data (load-obj "./objects/wall.obj"))
+                           *walls*))
+  (set! *walls* (spawn-obj (make <structure>
+                             :x -10 :y 0 :z 0
+                             :color WALL-COLOR
+                             :life 1
+                             :non-destroyable #t
+                             :obj-data (load-obj "./objects/wall.obj"))
+                           *walls*))
+  (set! *walls* (spawn-obj (make <structure>
+                             :x 0 :y 0 :z 10 :r 90
+                             :color WALL-COLOR
+                             :life 1
+                             :non-destroyable #t
+                             :obj-data (load-obj "./objects/wall.obj"))
+                           *walls*))
+  (set! *walls* (spawn-obj (make <structure>
+                             :x 0 :y 0 :z -10 :r 90
+                             :color WALL-COLOR
+                             :life 1
+                             :non-destroyable #t
+                             :obj-data (load-obj "./objects/wall.obj"))
+                           *walls*))
+  (set! *walls* (spawn-obj (make <structure>
+                             :x 0 :y 0.5 :z 0.5 :r 180
+                             :color RED
+                             :non-destroyable #t
+                             :obj-data (load-obj "./objects/title.obj"))
+                           *walls*))
+  )
 
-(set! *walls* (spawn-obj (make <structure>
-                           :x 10 :y 0 :z 0
-                           :color WALL-COLOR
-                           :life 1
-                           :non-destroyable #t
-                           :obj-data (load-obj "./objects/wall.obj"))
-                         *walls*))
-(set! *walls* (spawn-obj (make <structure>
-                           :x -10 :y 0 :z 0
-                           :color WALL-COLOR
-                           :life 1
-                           :non-destroyable #t
-                           :obj-data (load-obj "./objects/wall.obj"))
-                         *walls*))
-(set! *walls* (spawn-obj (make <structure>
-                           :x 0 :y 0 :z 10 :r 90
-                           :color WALL-COLOR
-                           :life 1
-                           :non-destroyable #t
-                           :obj-data (load-obj "./objects/wall.obj"))
-                         *walls*))
-(set! *walls* (spawn-obj (make <structure>
-                           :x 0 :y 0 :z -10 :r 90
-                           :color WALL-COLOR
-                           :life 1
-                           :non-destroyable #t
-                           :obj-data (load-obj "./objects/wall.obj"))
-                         *walls*))
+(define (game-over)
+  (setpos-obj! *player* 0 0 0)
+  (set! (r-of *player*) 0)
+  (set! *walls* '())
+  (set! *walls* (spawn-obj (make <structure>
+                             :x 0 :y 0.5 :z 0.5 :r 180
+                             :color RED
+                             :non-destroyable #t
+                             :obj-data (load-obj "./objects/game-over.obj"))
+                           *walls*))
+  (when (char=? *keycode* #\r) (game-init))
+  )
+(define (game-clear)
+  (setpos-obj! *player* 0 0 0)
+  (set! (r-of *player*) 0)
+  (set! *walls* '())
+  (set! *walls* (spawn-obj (make <structure>
+                             :x 0 :y 0.5 :z 0.5 :r 180
+                             :color RED
+                             :non-destroyable #t
+                             :obj-data (load-obj "./objects/game-clear.obj"))
+                           *walls*))
+  (when (char=? *keycode* #\r) (game-init))
+  )
 
 ;;end tentative code
 (define (display-main-scene)
@@ -181,7 +215,7 @@ This file is part of Colour.
 
 (define-method display-bullet! ((bullet <3d-obj>))
   (move-obj! bullet BULLET-SPEED)
-  (when 
+  (when (out-of-map? bullet)
     (set! (visible-of bullet) #f))
   (when (visible-of bullet) (display-3d-obj: bullet))
   )
@@ -379,6 +413,7 @@ This file is part of Colour.
   (gl-light GL_LIGHT0 GL_CONSTANT_ATTENUATION 0.2)
   (gl-enable GL_CULL_FACE)
   (gl-cull-face GL_BACK)
+  (game-init)
   )
 
 (define (keyboard key x y)

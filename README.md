@@ -1,18 +1,18 @@
 
 # Table of Contents
 
-1.  [Prologue](#orge541b2a)
-2.  [Introduction](#org1edcfe2)
-3.  [System](#orgb5cfaa1)
-4.  [Control](#orgf2dfa34)
-5.  [TODO-LIST](#org520552a)
-6.  [DONE-LIST](#orgffb5b66)
-7.  [REMOVED-LIST](#org9f33e66)
-8.  [License](#orgb07b627)
+1.  [Prologue](#orgb638b91)
+2.  [Introduction](#org089fa5d)
+3.  [System](#org1228ded)
+4.  [Control](#orge58cb5c)
+5.  [TODO-LIST](#org1fb147d)
+6.  [DONE-LIST](#org44a7c4b)
+7.  [REMOVED-LIST](#org29d94bf)
+8.  [License](#org809042e)
 
 
 
-<a id="orge541b2a"></a>
+<a id="orgb638b91"></a>
 
 # Prologue
 
@@ -24,7 +24,7 @@
 あなたの使命は"色"を駆使してT-zeroを殲滅し、世界に再び秩序をもたらすことだ。
 
 
-<a id="org1edcfe2"></a>
+<a id="org089fa5d"></a>
 
 # Introduction
 
@@ -35,7 +35,7 @@
     それでも挙動が治らない場合はごめんなさい。
 
 
-<a id="orgb5cfaa1"></a>
+<a id="org1228ded"></a>
 
 # System
 
@@ -54,7 +54,7 @@
 -   光の当たり方によっては、敵の色が見えないことがあります。そんなときは少し動き回って光の当たり方を調節しましょう。
 
 
-<a id="orgf2dfa34"></a>
+<a id="orge58cb5c"></a>
 
 # Control
 
@@ -67,19 +67,18 @@
 -   3 : 緑色を選択
 -   4 : 黄色を選択
 -   B : 選択した色の弾を発射
+-   R : ゲームをリスタートする(ゲームクリアまたはゲームオーバー時限定)
+-   ESC : ゲームを終了する
 
 
-<a id="org520552a"></a>
+<a id="org1fb147d"></a>
 
 # TODO-LIST
 
 これから実装予定の機能です。
 
--   ゲームサウンド
--   ゲームシステム(タイトル画面等)
 
-
-<a id="orgffb5b66"></a>
+<a id="org44a7c4b"></a>
 
 # DONE-LIST
 
@@ -97,9 +96,10 @@
 -   ダメージ -2021/6/27
 -   スポナー -2021/7/14
 -   構造物(壁) -2021/7/30
+-   ゲームシステム(タイトル画面等) -2021/8/29
 
 
-<a id="org9f33e66"></a>
+<a id="org29d94bf"></a>
 
 # REMOVED-LIST
 
@@ -108,9 +108,10 @@
 -   WASDによる移動 -移動システムの改良により削除
 -   ライトの調整(今はとても暗い) -どうしてもわからなかった
 -   テクスチャ -どうしてもわからなかった
+-   ゲームサウンド - gauche-openalのドキュメントが見つからず断念
 
 
-<a id="orgb07b627"></a>
+<a id="org809042e"></a>
 
 # License
 

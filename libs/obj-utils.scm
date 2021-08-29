@@ -88,6 +88,11 @@ This file is part of Colour.
           (+ (x-of obj) (* d (table-sin (r-of obj)) )) )
     (set! (z-of obj)
           (+ (z-of obj) (* d (table-cos (r-of obj)) )) )
+    )
+(define-method setpos-obj! ((obj <3d-obj>) x y z)
+  (set! (x-of obj) x)
+  (set! (y-of obj) y)
+  (set! (z-of obj) z)
   )
 
 (define-method display-life-bar: ((obj <creature>))
