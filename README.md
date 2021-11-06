@@ -33,6 +33,7 @@
 -   ColourはGauche(Scheme処理系), Gauche-gl(GaucheのOpenGL拡張)を必要とします。
 -   コンピュータによっては挙動がおかしくなることがあります。config.scmの設定を適宜変更してください。
     それでも挙動が治らない場合はごめんなさい。
+-   **重要** Colourは開発が終了しました。
 
 
 <a id="org1228ded"></a>
